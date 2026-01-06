@@ -246,4 +246,149 @@ renderWorkoutHistory() {
 
     const avgDuration = totalWorkouts > 0
         ? Math.round(this.workoutHistory.reduce((sum, w) => sum + w.duration, 0) / totalWorkouts)
-        : 0;}}
+        : 0;}
+       // Show a specific screen
+,showScreen(screenId) {
+    // Hide all screens
+    const screens = document.querySelectorAll('.screen');
+    for (let i = 0; i < screens.length; i++) {
+        screens[i].classList.remove('active');
+    }
+    
+    // Show the requested screen
+    const screen = document.getElementById(screenId);
+    if (screen) {
+        screen.classList.add('active');
+        this.currentScreen = screenId;
+    }
+},
+
+// Close modal
+closeModal() {
+    const modal = document.getElementById('exerciseModal');
+    modal.classList.remove('show');
+},
+
+// Show timer
+showTimer() {
+    const timer = document.getElementById('timerContainer');
+    timer.style.display = 'block';
+},
+
+// Start timer
+startTimer(seconds) {
+    this.stopTimer();
+    this.timerSeconds = seconds;
+    this.updateTimerDisplay();
+    
+    this.timerInterval = setInterval(() => {
+        this.timerSeconds--;
+        this.updateTimerDisplay();
+        
+        if (this.timerSeconds <= 0) {
+            this.stopTimer();
+            alert('Rest time complete! 💪🏾');
+        }
+    }, 1000);
+},
+
+// Stop timer
+stopTimer() {
+    if (this.timerInterval) {
+        clearInterval(this.timerInterval);
+        this.timerInterval = null;
+    }
+},
+
+// Update timer display
+updateTimerDisplay() {
+    const minutes = Math.floor(this.timerSeconds / 60);
+    const seconds = this.timerSeconds % 60;
+    const display = document.getElementById('timerDisplay');
+    display.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+},
+
+// Reset progress
+resetProgress() {
+    if (confirm('Are you sure you want to reset your progress?')) {
+        this.completedExercises.clear();
+        this.saveToStorage();
+        this.showScreen('dashboardScreen');
+        // You'll need to re-render the workout plan here
+    }
+},
+
+// Save to localStorage
+saveToStorage() {
+    localStorage.setItem('fitStartUser', JSON.stringify(this.userData));
+    localStorage.setItem('fitStartHistory', JSON.stringify(this.workoutHistory));
+    localStorage.setItem('fitStartCompleted', JSON.stringify([...this.completedExercises]));
+},
+
+// Load from localStorage
+loadFromStorage() {
+    const savedUser = localStorage.getItem('fitStartUser');
+    const savedHistory = localStorage.getItem('fitStartHistory');
+    const savedCompleted = localStorage.getItem('fitStartCompleted');
+    
+    if (savedUser) {
+        this.userData = JSON.parse(savedUser);
+    }
+    if (savedHistory) {
+        this.workoutHistory = JSON.parse(savedHistory);
+    }
+    if (savedCompleted) {
+        this.completedExercises = new Set(JSON.parse(savedCompleted));
+    }
+},
+
+// Validate form field
+validateField(input) {
+    const value = input.value.trim();
+    const errorMsg = input.parentElement.querySelector('.error-message');
+    let isValid = true;
+    
+    if (input.hasAttribute('required') && !value) {
+        isValid = false;
+    } else if (input.type === 'email' && value && !value.includes('@')) {
+        isValid = false;
+    } else if (input.type === 'number') {
+        const min = input.getAttribute('min');
+        const max = input.getAttribute('max');
+        const num = parseInt(value);
+        if (min && num < parseInt(min)) isValid = false;
+        if (max && num > parseInt(max)) isValid = false;
+    } else if (input.hasAttribute('minlength')) {
+        const minLength = parseInt(input.getAttribute('minlength'));
+        if (value.length < minLength) isValid = false;
+    }
+    
+    if (isValid) {
+        input.classList.remove('error');
+        if (errorMsg) errorMsg.classList.remove('show');
+    } else {
+        input.classList.add('error');
+        if (errorMsg) errorMsg.classList.add('show');
+    }
+    
+    return isValid;
+},
+
+// Handle form submission
+handleFormSubmit(e) {
+    e.preventDefault();
+    
+    // Get form values
+    this.userData = {
+        name: document.getElementById('userName').value,
+        age: document.getElementById('userAge').value,
+        level: document.getElementById('fitnessLevel').value,
+        goal: document.getElementById('fitnessGoal').value,
+        days: document.getElementById('daysPerWeek').value
+    };
+    
+    this.saveToStorage();
+    this.showScreen('dashboardScreen');
+    alert('Your workout plan has been created! 💪🏾');
+} 
+    }
