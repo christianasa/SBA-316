@@ -1,5 +1,5 @@
 const app = {
-    // Application state properties
+    // Properties
     currentScreen: 'welcomeScreen',
     currentNav: 'home',
     userData: null,
@@ -10,7 +10,7 @@ const app = {
     workoutHistory: [],
     isLoggedIn: false,
 
-    // Initialize the application
+    // Start
     init() {
         this.loadFromStorage();
         this.attachEventListeners();
