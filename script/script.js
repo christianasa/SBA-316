@@ -384,11 +384,12 @@ handleFormSubmit(e) {
         age: document.getElementById('userAge').value,
         level: document.getElementById('fitnessLevel').value,
         goal: document.getElementById('fitnessGoal').value,
+        bodyPartFocus: document.getElementById('bodyPartFocus').value,
         days: document.getElementById('daysPerWeek').value
     };
     
     this.saveToStorage();
     this.showScreen('dashboardScreen');
     alert('Your workout plan has been created! 💪🏾');
-} 
-    }
+}
+}

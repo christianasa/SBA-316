@@ -72,13 +72,31 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="bodyPartFocus">Body Part Focus *</label>
+                        <select id="bodyPartFocus" required>
+                            <option value="">Select body part</option>
+                            <option value="full-body">Full Body</option>
+                            <option value="upper-body">Upper Body</option>
+                            <option value="lower-body">Lower Body</option>
+                            <option value="chest">Chest</option>
+                            <option value="back">Back</option>
+                            <option value="shoulders">Shoulders</option>
+                            <option value="arms">Arms (Biceps/Triceps)</option>
+                            <option value="core">Core (Abs/Obliques)</option>
+                            <option value="legs">Legs (Quads/Hamstrings)</option>
+                            <option value="glutes">Glutes</option>
+                        </select>
+                        <span class="error-message">Please select a body part focus</span>
+                    </div>
+
+                    <div class="form-group">
                         <label for="fitnessGoal">Primary Goal *</label>
                         <select id="fitnessGoal" required>
                             <option value="">Select your goal</option>
                             <option value="strength">Build Strength</option>
                             <option value="weight-loss">Lose Weight</option>
                             <option value="muscle">Build Muscle</option>
-                    
+
                         </select>
                         <span class="error-message">Please select your goal</span>
                     </div>
@@ -108,116 +126,116 @@
                     <div class="progress-fill" id="progressFill" style="width: 0%"></div>
                 </div>
 
-                
-                </div>
 
-                <div id="workoutPlan"></div>
-
-                
             </div>
 
-            <!-- Login Screen -->
-            <div id="loginScreen" class="screen">
-                <div class="login-section">
-                    <h2>Member Login</h2>
-                    <p style="margin-bottom: 20px; color: #666;">Lorem ipsum dolor sit amet, consectetur adipiscing
-                        elit.</p>
-                    <form id="loginForm">
+            <div id="workoutPlan"></div>
+
+
+        </div>
+
+        <!-- Login Screen -->
+        <div id="loginScreen" class="screen">
+            <div class="login-section">
+                <h2>Member Login</h2>
+                <p style="margin-bottom: 20px; color: #666;">Lorem ipsum dolor sit amet, consectetur adipiscing
+                    elit.</p>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email Address *</label>
+                        <input type="email" id="loginEmail" required>
+                        <span class="error-message">Please enter a valid email</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loginPassword">Password *</label>
+                        <input type="password" id="loginPassword" required minlength="6">
+                        <span class="error-message">Password must be at least 6 characters</span>
+                    </div>
+
+                    <button type="submit" class="btn" style="width: 100%;">Login</button>
+                </form>
+                <p style="margin-top: 20px; text-align: center; color: #666;">
+                    Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt.
+                </p>
+            </div>
+        </div>
+
+        <!-- Form Videos Screen -->
+        <div id="videosScreen" class="screen">
+            <h2>Exercise Form Videos</h2>
+            <p style="margin-bottom: 20px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua.</p>
+
+            <div class="video-grid" id="videoGrid"></div>
+        </div>
+
+        <!-- Workout Tracking Screen -->
+        <div id="trackingScreen" class="screen">
+            <h2>Workout History</h2>
+            <p style="margin-bottom: 20px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad
+                minim veniam, quis nostrud exercitation ullamco laboris.</p>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3 id="totalWorkouts">0</h3>
+                    <p>Total Workouts</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="thisWeek">0</h3>
+                    <p>This Week</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="avgDuration">0</h3>
+                    <p>Avg Duration (min)</p>
+                </div>
+            </div>
+
+            <button class="btn add-workout-btn" onclick="app.showAddWorkoutForm()">+ Log New Workout</button>
+
+            <div id="workoutHistoryTable"></div>
+
+            <!-- Add Workout Form -->
+            <div id="addWorkoutForm" style="display: none; margin-top: 30px;">
+                <div class="workout-card">
+                    <h3>Log Your Workout</h3>
+                    <form id="trackingForm">
                         <div class="form-group">
-                            <label for="loginEmail">Email Address *</label>
-                            <input type="email" id="loginEmail" required>
-                            <span class="error-message">Please enter a valid email</span>
+                            <label for="workoutDate">Date *</label>
+                            <input type="date" id="workoutDate" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="loginPassword">Password *</label>
-                            <input type="password" id="loginPassword" required minlength="6">
-                            <span class="error-message">Password must be at least 6 characters</span>
+                            <label for="workoutType">Workout Type *</label>
+                            <select id="workoutType" required>
+                                <option value="">Select type</option>
+                                <option value="Strength">Strength Training</option>
+                                <option value="Cardio">Cardio</option>
+                                <option value="Flexibility">Flexibility</option>
+                                <option value="Mixed">Mixed</option>
+                            </select>
                         </div>
 
-                        <button type="submit" class="btn" style="width: 100%;">Login</button>
+                        <div class="form-group">
+                            <label for="workoutDuration">Time (minutes) *</label>
+                            <input type="number" id="workoutDuration" required min="5" max="300">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="workoutNotes">Notes</label>
+                            <input type="text" id="workoutNotes" placeholder="How did it go?">
+                        </div>
+
+                        <div>
+                            <button type="button" class="btn btn-secondary"
+                                onclick="app.hideAddWorkoutForm()">Cancel</button>
+                            <button type="submit" class="btn">Save Workout</button>
+                        </div>
                     </form>
-                    <p style="margin-top: 20px; text-align: center; color: #666;">
-                        Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Form Videos Screen -->
-            <div id="videosScreen" class="screen">
-                <h2>Exercise Form Videos</h2>
-                <p style="margin-bottom: 20px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua.</p>
-
-                <div class="video-grid" id="videoGrid"></div>
-            </div>
-
-            <!-- Workout Tracking Screen -->
-            <div id="trackingScreen" class="screen">
-                <h2>Workout History</h2>
-                <p style="margin-bottom: 20px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris.</p>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <h3 id="totalWorkouts">0</h3>
-                        <p>Total Workouts</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3 id="thisWeek">0</h3>
-                        <p>This Week</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3 id="avgDuration">0</h3>
-                        <p>Avg Duration (min)</p>
-                    </div>
-                </div>
-
-                <button class="btn add-workout-btn" onclick="app.showAddWorkoutForm()">+ Log New Workout</button>
-
-                <div id="workoutHistoryTable"></div>
-
-                <!-- Add Workout Form -->
-                <div id="addWorkoutForm" style="display: none; margin-top: 30px;">
-                    <div class="workout-card">
-                        <h3>Log Your Workout</h3>
-                        <form id="trackingForm">
-                            <div class="form-group">
-                                <label for="workoutDate">Date *</label>
-                                <input type="date" id="workoutDate" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="workoutType">Workout Type *</label>
-                                <select id="workoutType" required>
-                                    <option value="">Select type</option>
-                                    <option value="Strength">Strength Training</option>
-                                    <option value="Cardio">Cardio</option>
-                                    <option value="Flexibility">Flexibility</option>
-                                    <option value="Mixed">Mixed</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="workoutDuration">Time (minutes) *</label>
-                                <input type="number" id="workoutDuration" required min="5" max="300">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="workoutNotes">Notes</label>
-                                <input type="text" id="workoutNotes" placeholder="How did it go?">
-                            </div>
-
-                            <div>
-                                <button type="button" class="btn btn-secondary"
-                                    onclick="app.hideAddWorkoutForm()">Cancel</button>
-                                <button type="submit" class="btn">Save Workout</button>
-                            </div>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <!-- Exercise Info Modal -->
@@ -228,8 +246,8 @@
         </div>
     </div>
 
-    
-    
+
+
 </body>
 
 </html>
